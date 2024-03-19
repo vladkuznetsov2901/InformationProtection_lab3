@@ -32,11 +32,24 @@ def get_access_objects(user_auth, users: list, objects: list, T_users, T_objects
     return access_objects
 
 
-def request(access_objects: list, num_object, objects: list):
+def request(user_auth, users: list, access_objects: list, num_object, objects: list, T_users, T_objects):
     num_object = num_object - 1
     if objects[num_object] not in access_objects:
         print("Отказ в выполнении операции. Недостаточно прав")
     else:
-        file = open(f"objects_data/object{num_object + 1}.txt", "r")
-        print("Операция прошла успешно")
-        print(file.read())
+        operation = input("Жду ваших указаний>")
+        if operation == "write":
+            user_index = users.index(user_auth)
+            if T_users[user_index][0] == T_objects[num_object][0]:
+                file = open(f"objects_data/object{num_object + 1}.txt", "w")
+                print("Операция прошла успешно")
+                file.write(input("Введите строку: "))
+            else:
+                print("Ошибка при записи! Файл ниже уровнем!")
+
+        elif operation == "read":
+            file = open(f"objects_data/object{num_object + 1}.txt", "r")
+            print("Операция прошла успешно")
+            print(file.read())
+        else:
+            print("Ошибка! Неизвестная команда!")

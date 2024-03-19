@@ -45,4 +45,4 @@ while True:
             if command == "quit":
                 break
             num_object = int(input("Над каким объектом производится операция? "))
-            request(access_objects, num_object, objects)
+            request(user_auth, users, access_objects, num_object, objects, T_users, T_objects)
